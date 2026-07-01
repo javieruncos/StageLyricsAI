@@ -18,6 +18,7 @@ import { Badge } from "@/components/ui/badge"
 import { PageHeader } from "@/components/dashboard/page-header"
 import { songs, type Song, type SongStatus } from "@/lib/data"
 import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 const filters: { label: string; value: SongStatus | "all" }[] = [
   { label: "All songs", value: "all" },
@@ -56,10 +57,10 @@ export default function LibraryPage() {
         title="Song Library"
         description="Every lyric, key and tempo in one place. Search, organize and prep songs for the stage."
       >
-        <button className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3.5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
+        <Link href="/library/new" className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3.5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
           <Plus className="size-4" />
           New song
-        </button>
+        </Link>
       </PageHeader>
 
       <div className="p-4 md:p-6">
