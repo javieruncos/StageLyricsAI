@@ -37,10 +37,19 @@ export const createSong = async (req: Request) => {
                 message: "Todos los campos son OBLIGATORIOS"
             }, { status: 400 })
         }
-        
+
         // Extraemos los datos ya validados por Zod.
-        const { title, artist, lyrics } = result.data
-        
+        const {
+            title,
+            artist,
+            lyrics,
+            songKey,
+            bpm,
+            duration,
+            tags,
+            status,
+        } = result.data;
+
         //transformamos los datos a minusculas y eliminamos espacios en blanco
         const normalizedTitle = title.trim().toLowerCase();
         const normalizedArtist = artist.trim().toLowerCase();
@@ -51,14 +60,14 @@ export const createSong = async (req: Request) => {
             artist: { $regex: `^${normalizedArtist}$`, $options: "i" },
         })
 
-       // Si la canción ya existe, devolvemos un error 409.
+        // Si la canción ya existe, devolvemos un error 409.
         if (existingSong) {
             return Response.json({
                 success: false,
                 message: "La cancion ya existe"
             }, { status: 409 })
         }
-        
+
         //creamos el slug para la cancion
         const slug = normalizedTitle
             .replace(/\s+/g, "-")
@@ -71,6 +80,11 @@ export const createSong = async (req: Request) => {
             artist: normalizedArtist,
             lyrics: lyrics.trim(),
             slug,
+            songKey,
+            bpm,
+            duration,
+            tags,
+            status,
         })
 
         return Response.json({

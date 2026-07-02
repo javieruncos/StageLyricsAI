@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import Link from "next/link"
 import {
     ArrowLeft,
@@ -18,42 +18,26 @@ import {
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { PageHeader } from "@/components/dashboard/page-header"
-import { type SongStatus } from "@/lib/data"
 import { cn } from "@/lib/utils"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { createSongSchema } from "@/schemas/songs.schema";
 import { z } from "zod"
+import { musicalKeys, statusOptions, suggestedTags } from "@/data/songsFormData";
+import { createSongs } from "@/services/songs"
+import Swal from "sweetalert2"
+import { useRouter } from "next/navigation"
 
 // cramos un tipo para los valores del formulario 
 type createSongFormData = z.infer<typeof createSongSchema>
 
-const musicalKeys = [
-    "C major",
-    "G major",
-    "D major",
-    "A major",
-    "E major",
-    "F major",
-    "A minor",
-    "E minor",
-    "B minor",
-    "F# minor",
-    "C minor",
-    "D minor",
-]
 
-const statusOptions: { label: string; value: SongStatus; hint: string }[] = [
-    { label: "Draft", value: "draft", hint: "Still writing" },
-    { label: "Rehearsing", value: "rehearsing", hint: "Working on it" },
-    { label: "Ready", value: "ready", hint: "Stage-ready" },
-]
-
-const suggestedTags = ["original", "cover", "acoustic", "ballad", "opener", "encore", "closer"]
 
 export default function NewSongPage() {
     const [tagInput, setTagInput] = useState("")
     // inicialimos useform que sera para tomar y registrar los valores del formulario
+    //Inicializamos router
+    const router = useRouter()
 
     const form = useForm<createSongFormData>({
         //resolver sirve para enlazar los tipos con el esquema y validarlos
@@ -116,9 +100,34 @@ export default function NewSongPage() {
 
     const onSubmit = async (data: createSongFormData) => {
         try {
-            console.log(data)
+            const result = await createSongs(data)
+
+            await Swal.fire({
+                title: "¡Canción creada!",
+                text: result.message,
+                icon: "success",
+                confirmButtonText: "Continuar",
+                background: "#18181B",
+                color: "#fafafa",
+                confirmButtonColor: "#EAB308",
+                iconColor: "#EAB308",
+                customClass: {
+                    popup: "rounded-xl border border-zinc-800 shadow-2xl",
+                    title: "text-xl font-bold",
+                    htmlContainer: "text-zinc-400",
+                    confirmButton: "rounded-lg px-6 py-2 font-medium",
+                },
+            })
+
+            router.push("/library")
+
         } catch (error) {
-            console.log(error)
+            await Swal.fire({
+                title: "Error!",
+                text: "Error al crear la cancion",
+                icon: "error",
+                confirmButtonText: "Aceptar",
+            })
         }
     }
 
@@ -385,7 +394,7 @@ export default function NewSongPage() {
                                 className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 <Save className="size-4" />
-                                Guardar 
+                                Guardar
                             </button>
                             <button
                                 type="button"
