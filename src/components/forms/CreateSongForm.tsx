@@ -57,10 +57,10 @@ export default function NewSongPage() {
 
     const form = useForm<createSongFormData>({
         //resolver sirve para enlazar los tipos con el esquema y validarlos
-       resolver: zodResolver(createSongSchema),
+        resolver: zodResolver(createSongSchema),
         mode: 'onChange',
-        reValidateMode:"onChange",
-        criteriaMode :"all",
+        reValidateMode: "onChange",
+        criteriaMode: "all",
         defaultValues: {
             title: "",
             artist: "",
@@ -70,11 +70,11 @@ export default function NewSongPage() {
             status: "draft",
             tags: [],
             lyrics: "",
-            genre:"",
-           
+            genre: "",
+
         },
     })
-    
+
 
     //aca escuchamos los cambios en los campos del formulario
     const lyrics = form.watch("lyrics");
@@ -87,7 +87,7 @@ export default function NewSongPage() {
 
 
 
-   
+
     function addTag(value: string) {
         //pasamos el value a minusculas y sin espacios
         const t = value.trim().toLowerCase()
@@ -106,20 +106,20 @@ export default function NewSongPage() {
         form.setValue("tags", tags.filter((t) => t !== tag))
     }
 
-  const values = form.watch()
+    const values = form.watch()
 
-const canSubmit =
-  !!values.title &&
-  !!values.artist &&
-  !!values.lyrics &&
-  !form.formState.isSubmitting
+    const canSubmit =
+        !!values.title &&
+        !!values.artist &&
+        !!values.lyrics &&
+        !form.formState.isSubmitting
 
-    const onSubmit= async (data:createSongFormData) => {
+    const onSubmit = async (data: createSongFormData) => {
         try {
             console.log(data)
         } catch (error) {
             console.log(error)
-        } 
+        }
     }
 
     return (
@@ -133,7 +133,7 @@ const canSubmit =
                     className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
                 >
                     <ArrowLeft className="size-4" />
-                    Back to library
+                    Volver a la biblioteca
                 </Link>
             </PageHeader>
 
@@ -148,24 +148,24 @@ const canSubmit =
                         <CardContent className="p-5">
                             <h2 className="flex items-center gap-2 text-sm font-semibold">
                                 <Music2 className="size-4 text-primary" />
-                                Song details
+                                Detalles de la canción
                             </h2>
                             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                                <Field label="Title" required className="sm:col-span-2">
+                                <Field label="Titulo" required className="sm:col-span-2">
                                     <input
                                         {...form.register("title")}
-                                        placeholder="e.g. Neon Rivers"
+                                        placeholder="Introduce el titulo de la cancion"
                                         className={inputClass}
                                     />
                                 </Field>
-                                <Field label="Artist" className="sm:col-span-2">
+                                <Field label="Artista" className="sm:col-span-2">
                                     <input
                                         {...form.register("artist")}
-                                        placeholder="e.g. The Midnight Echo"
+                                        placeholder="Introduce el nombre del artista"
                                         className={inputClass}
                                     />
                                 </Field>
-                                <Field label="Key">
+                                <Field label="Tonalidad">
                                     <select
                                         {...form.register("songKey")}
                                         className={inputClass}
@@ -179,26 +179,26 @@ const canSubmit =
                                 </Field>
                                 <Field label="Tempo (BPM)" icon={<Gauge className="size-3" />}>
                                     <input
-                                        {...form.register("bpm",{valueAsNumber:true})}
+                                        {...form.register("bpm", { valueAsNumber: true })}
                                         inputMode="numeric"
                                         placeholder="92"
                                         className={inputClass}
                                     />
                                 </Field>
-                                <Field label="Duration" icon={<Clock className="size-3" />}>
+                                <Field label="Duración" icon={<Clock className="size-3" />}>
                                     <input
                                         {...form.register("duration")}
                                         placeholder="4:12"
                                         className={inputClass}
                                     />
                                 </Field>
-                                <Field label="Status">
+                                <Field label="Estado">
                                     <div className="flex gap-1.5">
                                         {statusOptions.map((s) => (
                                             <button
                                                 key={s.value}
                                                 type="button"
-                                                onClick={() => form.setValue("status", s.value,{shouldDirty:true, shouldValidate:true})}
+                                                onClick={() => form.setValue("status", s.value, { shouldDirty: true, shouldValidate: true })}
                                                 className={cn(
                                                     "flex-1 rounded-lg border px-2 py-2 text-xs font-medium transition-colors",
                                                     status === s.value
@@ -220,7 +220,7 @@ const canSubmit =
                         <CardContent className="p-5">
                             <h2 className="flex items-center gap-2 text-sm font-semibold">
                                 <Tag className="size-4 text-primary" />
-                                Tags
+                                Etiquetas
                             </h2>
                             <div className="relative mt-4 flex items-center">
                                 <Plus className="pointer-events-none absolute left-3 size-4 text-muted-foreground" />
@@ -233,7 +233,7 @@ const canSubmit =
                                             addTag(tagInput)
                                         }
                                     }}
-                                    placeholder="Add a tag and press Enter"
+                                    placeholder="Introduce la etiqueta y presiona Enter"
                                     className="h-9 w-full rounded-lg border border-border bg-input pl-9 pr-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-ring"
                                 />
                             </div>
@@ -280,24 +280,24 @@ const canSubmit =
                             <div className="flex items-center justify-between">
                                 <h2 className="flex items-center gap-2 text-sm font-semibold">
                                     <ListMusic className="size-4 text-primary" />
-                                    Lyrics
+                                    Letra
                                 </h2>
                                 <button
                                     type="button"
                                     className="inline-flex items-center gap-1.5 rounded-lg border border-primary/40 bg-primary/10 px-2.5 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
                                 >
                                     <Sparkles className="size-3.5" />
-                                    Format with AI
+                                    Formato IA
                                 </button>
                             </div>
                             <textarea
                                 {...form.register("lyrics")}
                                 rows={14}
-                                placeholder={"[Verse 1]\nType or paste your lyrics here…\n\n[Chorus]\nUse section labels like [Verse], [Chorus], [Bridge]"}
+                                placeholder={"[Verse 1]\nEscribe o pega la letra aquí...\n\n[Chorus]\nUsa etiquetas de sección como [Verse], [Chorus], [Bridge]"}
                                 className="mt-4 w-full resize-y rounded-lg border border-border bg-input p-4 font-mono text-sm leading-relaxed outline-none transition-colors placeholder:text-muted-foreground focus:border-ring"
                             />
                             <p className="mt-2 font-mono text-[11px] text-muted-foreground">
-                                {lineCount} line{lineCount === 1 ? "" : "s"}
+                                {lineCount} línea{lineCount === 1 ? "" : "s"}
                             </p>
                         </CardContent>
                     </Card>
@@ -308,14 +308,14 @@ const canSubmit =
                     <Card className="lg:sticky lg:top-20">
                         <div className="flex items-center justify-between border-b border-border px-5 py-3">
                             <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                                Live preview
+                                Previsualización
                             </span>
                             <Badge
                                 variant={
                                     status === "ready" ? "success" : status === "rehearsing" ? "warning" : "muted"
                                 }
                             >
-                                {statusOptions.find((s) => s.value === status )?.label}
+                                {statusOptions.find((s) => s.value === status)?.label}
                             </Badge>
                         </div>
                         <CardContent className="p-5">
@@ -336,7 +336,7 @@ const canSubmit =
                             <div className="mt-4 grid grid-cols-3 gap-px overflow-hidden rounded-lg border border-border bg-border">
                                 <div className="bg-card p-3">
                                     <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                                        Key
+                                        Tonalidad
                                     </p>
                                     <p className="mt-1 font-mono text-sm font-medium">{form.getValues("songKey")}</p>
                                 </div>
@@ -350,7 +350,7 @@ const canSubmit =
                                 </div>
                                 <div className="bg-card p-3">
                                     <p className="flex items-center gap-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                                        <Clock className="size-3" /> Length
+                                        <Clock className="size-3" /> Duración
                                     </p>
                                     <p className="mt-1 font-mono text-sm font-medium">{form.getValues("duration") || "—"}</p>
                                 </div>
@@ -373,7 +373,7 @@ const canSubmit =
                                     </pre>
                                 ) : (
                                     <p className="text-sm text-muted-foreground">
-                                        Your lyrics will appear here as you type.
+                                        Tus letras aparecerán aquí mientras escribes.
                                     </p>
                                 )}
                             </div>
@@ -385,7 +385,7 @@ const canSubmit =
                                 className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 <Save className="size-4" />
-                                Save song
+                                Guardar 
                             </button>
                             <button
                                 type="button"
@@ -393,13 +393,13 @@ const canSubmit =
                                 className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-border px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 <Radio className="size-4" />
-                                Save & open Live
+                                Guardar y abrir en vivo
                             </button>
                             <Link
                                 href="/library"
                                 className="inline-flex items-center justify-center rounded-lg border border-border px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                             >
-                                Cancel
+                                Cancelar
                             </Link>
                         </div>
                     </Card>
