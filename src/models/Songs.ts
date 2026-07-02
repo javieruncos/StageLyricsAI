@@ -10,7 +10,7 @@ const SongSchema = new Schema({
         type: String,
         required: true
     },
-    key: {
+    songKey: {
         type: String,
         required: true
     },
@@ -32,7 +32,7 @@ const SongSchema = new Schema({
         required: true
     },
     duration: {
-        type: Number,
+        type: String,
         required: true
     },
     updatedAt: {

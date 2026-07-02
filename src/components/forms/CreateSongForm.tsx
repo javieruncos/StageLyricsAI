@@ -57,14 +57,16 @@ export default function NewSongPage() {
 
     const form = useForm<createSongFormData>({
         //resolver sirve para enlazar los tipos con el esquema y validarlos
-       resolver: zodResolver(createSongSchema as any),
+       resolver: zodResolver(createSongSchema),
         mode: 'onChange',
+        reValidateMode:"onChange",
+        criteriaMode :"all",
         defaultValues: {
             title: "",
             artist: "",
             songKey: "C major",
             bpm: undefined,
-            duration: undefined,
+            duration: "",
             status: "draft",
             tags: [],
             lyrics: "",
@@ -104,10 +106,13 @@ export default function NewSongPage() {
         form.setValue("tags", tags.filter((t) => t !== tag))
     }
 
-    const {
-        isValid,
-        isSubmitting,
-    } = form.formState
+  const values = form.watch()
+
+const canSubmit =
+  !!values.title &&
+  !!values.artist &&
+  !!values.lyrics &&
+  !form.formState.isSubmitting
 
     const onSubmit= async (data:createSongFormData) => {
         try {
@@ -174,7 +179,7 @@ export default function NewSongPage() {
                                 </Field>
                                 <Field label="Tempo (BPM)" icon={<Gauge className="size-3" />}>
                                     <input
-                                        {...form.register("bpm")}
+                                        {...form.register("bpm",{valueAsNumber:true})}
                                         inputMode="numeric"
                                         placeholder="92"
                                         className={inputClass}
@@ -376,7 +381,7 @@ export default function NewSongPage() {
                         <div className="flex items-center gap-2 px-5 py-3">
                             <button
                                 type="submit"
-                                disabled={!form.formState.isValid}
+                                disabled={!canSubmit}
                                 className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 <Save className="size-4" />

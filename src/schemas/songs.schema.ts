@@ -7,8 +7,8 @@ export const createSongSchema = z.object({
     tags: z.array(z.string()).optional(),
     songKey: z.string().optional(),
     bpm: z.coerce.number().positive().optional(),
-    duration: z.coerce.number().positive().optional(),
-    status: z.string().optional(),
+    duration: z.string().min(1, "Duration requerida"),
+    status: z.enum(["draft", "rehearsing", "ready"]),
     genre: z.string().optional(),
 })
 
