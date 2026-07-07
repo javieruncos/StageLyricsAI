@@ -16,9 +16,10 @@ import {
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { PageHeader } from "@/components/dashboard/page-header"
-import { songs, type Song, type SongStatus } from "@/lib/data"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
+import { useSongs } from "@/hooks/useSongs"
+import { Song, SongStatus } from "@/lib/data"
 
 const filters: { label: string; value: SongStatus | "all" }[] = [
   { label: "All songs", value: "all" },
@@ -34,12 +35,14 @@ const statusBadge: Record<SongStatus, { label: string; variant: "success" | "war
 }
 
 export default function LibraryPage() {
+  const { data, isLoading, error } = useSongs()
   const [query, setQuery] = useState("")
   const [filter, setFilter] = useState<SongStatus | "all">("all")
   const [selected, setSelected] = useState<Song | null>(null)
 
   const filtered = useMemo(() => {
-    return songs.filter((s) => {
+    if (!data) return []
+    return data.filter((s) => {
       const matchesFilter = filter === "all" || s.status === filter
       const q = query.toLowerCase()
       const matchesQuery =
@@ -49,7 +52,7 @@ export default function LibraryPage() {
         s.tags.some((t) => t.includes(q))
       return matchesFilter && matchesQuery
     })
-  }, [query, filter])
+  }, [data, query, filter])
 
   return (
     <div>
