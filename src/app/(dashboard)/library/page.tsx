@@ -164,7 +164,9 @@ export default function LibraryPage() {
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setSelected(null)}
-          />
+          >
+           
+          </div>
           <div className="absolute right-0 top-0 flex h-full w-full max-w-lg flex-col border-l border-border bg-card shadow-2xl">
             <div className="flex items-start justify-between gap-4 border-b border-border p-5">
               <div className="min-w-0">
