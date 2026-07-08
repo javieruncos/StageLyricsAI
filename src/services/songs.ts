@@ -23,3 +23,13 @@ export const getSongs = async (): Promise<Song[]> => {
         throw new Error("Error al obtener canciones")
     }
 }
+
+export const getSongByID = async (id: string): Promise<Song | null> => {
+    try {
+        const response = await api.get(`/songs/${id}`)
+        return response.data.data
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}

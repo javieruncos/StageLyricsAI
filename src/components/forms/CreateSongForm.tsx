@@ -27,6 +27,7 @@ import { musicalKeys, statusOptions, suggestedTags } from "@/data/songsFormData"
 import { createSongs } from "@/services/songs"
 import Swal from "sweetalert2"
 import { useRouter } from "next/navigation"
+import { useCreateSong } from "@/hooks/useCreateSong"
 
 // cramos un tipo para los valores del formulario 
 type createSongFormData = z.infer<typeof createSongSchema>
@@ -35,6 +36,7 @@ type createSongFormData = z.infer<typeof createSongSchema>
 
 export default function NewSongPage() {
     const [tagInput, setTagInput] = useState("")
+    const {mutateAsync} = useCreateSong()
     // inicialimos useform que sera para tomar y registrar los valores del formulario
     //Inicializamos router
     const router = useRouter()
@@ -100,7 +102,7 @@ export default function NewSongPage() {
 
     const onSubmit = async (data: createSongFormData) => {
         try {
-            const result = await createSongs(data)
+            const result = await mutateAsync(data)
 
             await Swal.fire({
                 title: "¡Canción creada!",
