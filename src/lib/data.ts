@@ -4,13 +4,14 @@ export type Song = {
   id: string
   title: string
   artist: string
-  key: string
+  songKey: string
   bpm: number
   duration: string
   tags: string[]
   status: SongStatus
   updatedAt: string
-  lyrics: string
+  lyrics: string,
+  genre?: string
 }
 
 export type Setlist = {
@@ -28,7 +29,7 @@ export const songs: Song[] = [
     id: "neon-rivers",
     title: "Neon Rivers",
     artist: "The Midnight Echo",
-    key: "A minor",
+    songKey: "A minor",
     bpm: 92,
     duration: "4:12",
     tags: ["original", "encore"],
@@ -60,7 +61,7 @@ I'll be here when all the embers fade`,
     id: "paper-hearts",
     title: "Paper Hearts",
     artist: "The Midnight Echo",
-    key: "C major",
+    songKey: "C major",
     bpm: 76,
     duration: "3:48",
     tags: ["original", "acoustic"],
@@ -82,7 +83,7 @@ Paper hearts still made a place to land`,
     id: "gravity",
     title: "Gravity",
     artist: "Cover — John Mayer",
-    key: "G major",
+    songKey: "G major",
     bpm: 64,
     duration: "4:05",
     tags: ["cover", "ballad"],
@@ -101,7 +102,7 @@ Dreams of ways to throw it all away`,
     id: "wildfire",
     title: "Wildfire",
     artist: "The Midnight Echo",
-    key: "E minor",
+    songKey: "E minor",
     bpm: 128,
     duration: "3:21",
     tags: ["original", "opener"],
@@ -121,7 +122,7 @@ Nothing's ever gonna be the same`,
     id: "slow-dance",
     title: "Slow Dance in the Kitchen",
     artist: "The Midnight Echo",
-    key: "D major",
+    songKey: "D major",
     bpm: 58,
     duration: "4:40",
     tags: ["original", "ballad"],
@@ -139,7 +140,7 @@ Barefoot on a Tuesday night`,
     id: "the-fever",
     title: "The Fever",
     artist: "Cover — Fleetwood Mac",
-    key: "B minor",
+    songKey: "B minor",
     bpm: 110,
     duration: "3:55",
     tags: ["cover", "encore"],
@@ -157,7 +158,7 @@ Pull me close and don't you hide`,
     id: "city-of-glass",
     title: "City of Glass",
     artist: "The Midnight Echo",
-    key: "F# minor",
+    songKey: "F# minor",
     bpm: 100,
     duration: "4:18",
     tags: ["original"],
@@ -175,7 +176,7 @@ Reflections of a love that brought us here`,
     id: "long-way-home",
     title: "Long Way Home",
     artist: "The Midnight Echo",
-    key: "A major",
+    songKey: "A major",
     bpm: 84,
     duration: "3:36",
     tags: ["original", "closer"],

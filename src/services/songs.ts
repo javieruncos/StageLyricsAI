@@ -33,3 +33,14 @@ export const getSongByID = async (id: string): Promise<Song | null> => {
         return null
     }
 }
+
+export const updateSong = async (id: string, data: z.infer<typeof createSongSchema>) =>{
+    try {
+        const response = await api.put(`/songs/${id}`, data);
+        return response.data
+    } catch (error) {
+        console.log(error)
+    }
+
+    
+}

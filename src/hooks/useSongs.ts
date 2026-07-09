@@ -14,10 +14,10 @@ export const useSongs = () => {
     })
 }
 
-export const useSongByID = (id: string) => {
+export const useSongByID = (id?: string) => {
     return useQuery<Song | null>({
-        queryKey: queryKeys.song(id),
-        queryFn: () => getSongByID(id),
+        queryKey: queryKeys.song(id  ?? ""),
+        queryFn: () => getSongByID(id!),
         enabled: !!id,
     })
 }

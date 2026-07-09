@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import {
     ArrowLeft,
@@ -28,15 +28,21 @@ import { createSongs } from "@/services/songs"
 import Swal from "sweetalert2"
 import { useRouter } from "next/navigation"
 import { useCreateSong } from "@/hooks/useCreateSong"
+import { useSongByID } from "@/hooks/useSongs"
 
 // cramos un tipo para los valores del formulario 
 type createSongFormData = z.infer<typeof createSongSchema>
 
+type SongFormProps = {
+    songId?: string;
+};
 
-
-export default function NewSongPage() {
+export default function NewSongPage({ songId }: SongFormProps) {
     const [tagInput, setTagInput] = useState("")
-    const {mutateAsync} = useCreateSong()
+    const { mutateAsync } = useCreateSong()
+    const isEditMode = !!songId;
+
+    const { data: song, isLoading } = useSongByID(songId);
     // inicialimos useform que sera para tomar y registrar los valores del formulario
     //Inicializamos router
     const router = useRouter()
@@ -60,6 +66,22 @@ export default function NewSongPage() {
 
         },
     })
+
+    useEffect(() => {
+        if (!song) return;
+
+        form.reset({
+            title: song.title,
+            artist: song.artist,
+            songKey: song.songKey,
+            bpm: song.bpm,
+            duration: song.duration,
+            status: song.status,
+            tags: song.tags,
+            lyrics: song.lyrics,
+            genre: song.genre ?? "",
+        });
+    }, [song, form]);
 
 
     //aca escuchamos los cambios en los campos del formulario

@@ -111,7 +111,7 @@ export default function LibraryPage() {
             {filtered.map((song) => {
               const sb = statusBadge[song.status]
               return (
-                <li key={song.id}>
+                <li key={song.songKey}>
                   <button
                     onClick={() => setSelected(song)}
                     className="grid w-full grid-cols-1 items-center gap-2 px-5 py-3.5 text-left transition-colors hover:bg-muted/40 md:grid-cols-[1.5fr_0.6fr_0.6fr_0.8fr_0.8fr] md:gap-4"
@@ -129,7 +129,7 @@ export default function LibraryPage() {
                     </div>
                     <span className="font-mono text-sm text-muted-foreground">
                       <span className="md:hidden">Key: </span>
-                      {song.key}
+                      {song.songKey}
                     </span>
                     <span className="font-mono text-sm text-muted-foreground">
                       <span className="md:hidden">BPM: </span>
@@ -189,7 +189,7 @@ export default function LibraryPage() {
                 <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                   Key
                 </p>
-                <p className="mt-1 font-mono text-sm font-medium">{selected.key}</p>
+                <p className="mt-1 font-mono text-sm font-medium">{selected.songKey}</p>
               </div>
               <div className="bg-card p-4">
                 <p className="flex items-center gap-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
