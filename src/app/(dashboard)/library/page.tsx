@@ -216,10 +216,10 @@ export default function LibraryPage() {
                 <Radio className="size-4" />
                 Open in Live Mode
               </button>
-              <button className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-border px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted">
+              <Link href={`/library/${selected?._id}/edit`} className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-border px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted">
                 <Pencil className="size-4" />
                 Edit
-              </button>
+              </Link>
               <button className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-primary/40 bg-primary/10 px-3 py-2.5 text-sm font-medium text-primary transition-colors hover:bg-primary/20">
                 <Sparkles className="size-4" />
                 AI

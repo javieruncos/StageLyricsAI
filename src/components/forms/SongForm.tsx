@@ -29,6 +29,7 @@ import Swal from "sweetalert2"
 import { useRouter } from "next/navigation"
 import { useCreateSong } from "@/hooks/useCreateSong"
 import { useSongByID } from "@/hooks/useSongs"
+import { useUpdateSong } from "@/hooks/useUpdateSong"
 
 // cramos un tipo para los valores del formulario 
 type createSongFormData = z.infer<typeof createSongSchema>
@@ -39,7 +40,8 @@ type SongFormProps = {
 
 export default function NewSongPage({ songId }: SongFormProps) {
     const [tagInput, setTagInput] = useState("")
-    const { mutateAsync } = useCreateSong()
+    const { mutateAsync: createSong } = useCreateSong()
+    const { mutateAsync: updateSong } = useUpdateSong()
     const isEditMode = !!songId;
 
     const { data: song, isLoading } = useSongByID(songId);
@@ -124,7 +126,14 @@ export default function NewSongPage({ songId }: SongFormProps) {
 
     const onSubmit = async (data: createSongFormData) => {
         try {
-            const result = await mutateAsync(data)
+
+            let result ;
+
+            if (isEditMode) {
+                result = await updateSong({id: songId!, data});
+            } else {
+                result = await createSong(data);
+            }
 
             await Swal.fire({
                 title: "¡Canción creada!",

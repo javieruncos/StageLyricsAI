@@ -1,7 +1,7 @@
 export type SongStatus = "ready" | "rehearsing" | "draft"
 
 export type Song = {
-  id: string
+  _id: string
   title: string
   artist: string
   songKey: string
@@ -26,7 +26,7 @@ export type Setlist = {
 
 export const songs: Song[] = [
   {
-    id: "neon-rivers",
+    _id: "neon-rivers",
     title: "Neon Rivers",
     artist: "The Midnight Echo",
     songKey: "A minor",
@@ -58,7 +58,7 @@ If the morning takes this dream away
 I'll be here when all the embers fade`,
   },
   {
-    id: "paper-hearts",
+    _id: "paper-hearts",
     title: "Paper Hearts",
     artist: "The Midnight Echo",
     songKey: "C major",
@@ -80,7 +80,7 @@ Even if it crumbles in my hand
 Paper hearts still made a place to land`,
   },
   {
-    id: "gravity",
+    _id: "gravity",
     title: "Gravity",
     artist: "Cover — John Mayer",
     songKey: "G major",
@@ -99,7 +99,7 @@ With all the love that his heart can stand
 Dreams of ways to throw it all away`,
   },
   {
-    id: "wildfire",
+    _id: "wildfire",
     title: "Wildfire",
     artist: "The Midnight Echo",
     songKey: "E minor",
@@ -119,7 +119,7 @@ Run with me into the flame
 Nothing's ever gonna be the same`,
   },
   {
-    id: "slow-dance",
+    _id: "slow-dance",
     title: "Slow Dance in the Kitchen",
     artist: "The Midnight Echo",
     songKey: "D major",
@@ -137,7 +137,7 @@ So we slow dance in the kitchen light
 Barefoot on a Tuesday night`,
   },
   {
-    id: "the-fever",
+    _id: "the-fever",
     title: "The Fever",
     artist: "Cover — Fleetwood Mac",
     songKey: "B minor",
@@ -155,7 +155,7 @@ It's the fever, won't you let it ride
 Pull me close and don't you hide`,
   },
   {
-    id: "city-of-glass",
+    _id: "city-of-glass",
     title: "City of Glass",
     artist: "The Midnight Echo",
     songKey: "F# minor",
@@ -173,7 +173,7 @@ In the city of glass we disappear
 Reflections of a love that brought us here`,
   },
   {
-    id: "long-way-home",
+    _id: "long-way-home",
     title: "Long Way Home",
     artist: "The Midnight Echo",
     songKey: "A major",
@@ -232,7 +232,7 @@ export const setlists: Setlist[] = [
 ]
 
 export function getSong(id: string) {
-  return songs.find((s) => s.id === id)
+  return songs.find((s) => s._id === id)
 }
 
 export const stats = [
