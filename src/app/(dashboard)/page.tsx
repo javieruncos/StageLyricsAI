@@ -111,7 +111,7 @@ export default function OverviewPage() {
                           </p>
                         </div>
                         <Badge variant="muted" className="font-mono">
-                          {song.key}
+                          {song.songKey}
                         </Badge>
                         <span className="hidden font-mono text-xs text-muted-foreground sm:inline">
                           {song.duration}
@@ -218,7 +218,7 @@ export default function OverviewPage() {
                     ))}
                   </div>
                   <Badge variant="muted" className="font-mono">
-                    {song.key}
+                    {song.songKey}
                   </Badge>
                   <span className="w-16 text-right font-mono text-xs text-muted-foreground">
                     {song.updatedAt}

@@ -100,3 +100,112 @@ export const createSong = async (req: Request) => {
         }, { status: 500 })
     }
 }
+
+
+export const getSongByID = async (id: string) => {
+    try {
+        await connectDB()
+
+        const song = await Songs.findById(id)
+
+        if (!song) {
+            return Response.json({
+                success: false,
+                message: "Cancion no encontrada"
+            }, { status: 404 })
+        }
+
+        return Response.json({
+            success: true,
+            data: song
+        })
+    } catch (error) {
+        console.error(error)
+        return Response.json({
+            success: false,
+            message: "Error al obtener la cancion"
+        }, { status: 500 })
+    }
+}
+
+
+export const updateSong = async (req: Request, id: string) => {
+    try {
+        await connectDB()
+        const body = await req.json()
+
+        const result = createSongSchema.safeParse(body)
+
+        if (!result.success) {
+            return Response.json({
+                success: false,
+                message: "Todos los campos son OBLIGATORIOS"
+            }, { status: 400 })
+        }
+
+        const {
+            title,
+            artist,
+            lyrics,
+            songKey,
+            bpm,
+            duration,
+            tags,
+            status,
+            genre,
+        } = result.data;
+
+        const normalizedTitle = title.trim().toLowerCase();
+        const normalizedArtist = artist.trim().toLowerCase();
+
+        const song = await Songs.findByIdAndUpdate(id, { title: normalizedTitle, artist: normalizedArtist, lyrics: lyrics.trim(), songKey, bpm, duration, tags, status, genre }, { new: true, runValidators: true })
+
+        if (!song) {
+            return Response.json({
+                success: false,
+                message: "Cancion no encontrada"
+            }, { status: 404 })
+        }
+
+        return Response.json({
+            success: true,
+            data: song,
+            message: "Cancion actualizada exitosamente"
+        })
+    } catch (error) {
+        console.error(error)
+        return Response.json({
+            success: false,
+            message: "Error al actualizar la cancion"
+        }, { status: 500 })
+    }
+}
+
+
+export const deleteSong = async (id: string) => {
+    
+    try {
+        await connectDB()
+        
+        const song = await Songs.findByIdAndDelete(id)
+
+        if (!song) {
+            return Response.json({
+                success: false,
+                message: "Cancion no encontrada"
+            }, { status: 404 })
+        }
+
+        return Response.json({
+            success: true,
+            message: "Cancion eliminada exitosamente"
+        })
+    } catch (error) {
+        console.error(error)
+        return Response.json({
+            success: false,
+            message: "Error al eliminar la cancion"
+        }, { status: 500 })
+    }
+
+}

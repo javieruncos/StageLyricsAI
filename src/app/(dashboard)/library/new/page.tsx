@@ -1,9 +1,9 @@
-import CreateSongForm from "@/components/forms/CreateSongForm"
+import SongForm from "@/components/forms/SongForm"
 
 export default function Page() {
     return (
         <div className="pt-10">
-            <CreateSongForm />
+            <SongForm />
         </div>
     )
 }

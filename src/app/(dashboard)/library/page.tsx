@@ -16,9 +16,13 @@ import {
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { PageHeader } from "@/components/dashboard/page-header"
-import { songs, type Song, type SongStatus } from "@/lib/data"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
+import { useSongs } from "@/hooks/useSongs"
+import { Song, SongStatus } from "@/lib/data"
+import { useDeleteSong } from "@/hooks/useDeleteSong"
+import { Toast } from "radix-ui"
+import Swal from "sweetalert2"
 
 const filters: { label: string; value: SongStatus | "all" }[] = [
   { label: "All songs", value: "all" },
@@ -34,12 +38,82 @@ const statusBadge: Record<SongStatus, { label: string; variant: "success" | "war
 }
 
 export default function LibraryPage() {
+  const { data, isLoading, error } = useSongs()
+
+  const { mutateAsync: deleteSong } = useDeleteSong()
+
+  const handleDelete = async (song: Song) => {
+
+    const result = await Swal.fire({
+      title: "¿Eliminar canción?",
+      text: `Se eliminará "${song.title}" permanentemente.`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#DC2626",
+      cancelButtonColor: "#3F3F46",
+      background: "#18181B",
+      color: "#FAFAFA",
+      iconColor: "#EAB308",
+      customClass: {
+        popup: "rounded-xl border border-zinc-800 shadow-2xl",
+        confirmButton: "rounded-lg px-4 py-2",
+        cancelButton: "rounded-lg px-4 py-2",
+      },
+    });
+
+    if (!result.isConfirmed) {
+      return;
+    }
+    try {
+      await deleteSong(song._id)
+      setSelected(null)
+
+      Swal.fire({
+        title: "Canción eliminada",
+        text: "La canción se ha eliminado correctamente.",
+        icon: "success",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#22C55E",
+        background: "#18181B",
+        color: "#FAFAFA",
+        customClass: {
+          popup: "rounded-xl border border-zinc-800 shadow-2xl",
+          confirmButton: "rounded-lg px-4 py-2",
+        },
+      });
+
+
+
+    } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: "No se ha podido eliminar la canción.",
+        icon: "error",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#DC2626",
+        background: "#18181B",
+        color: "#FAFAFA",
+        customClass: {
+          popup: "rounded-xl border border-zinc-800 shadow-2xl",
+          confirmButton: "rounded-lg px-4 py-2",
+        },
+      });
+
+    }
+
+    //cerramos el modal
+
+  }
+
   const [query, setQuery] = useState("")
   const [filter, setFilter] = useState<SongStatus | "all">("all")
   const [selected, setSelected] = useState<Song | null>(null)
 
   const filtered = useMemo(() => {
-    return songs.filter((s) => {
+    if (!data) return []
+    return data.filter((s) => {
       const matchesFilter = filter === "all" || s.status === filter
       const q = query.toLowerCase()
       const matchesQuery =
@@ -49,7 +123,7 @@ export default function LibraryPage() {
         s.tags.some((t) => t.includes(q))
       return matchesFilter && matchesQuery
     })
-  }, [query, filter])
+  }, [data, query, filter])
 
   return (
     <div>
@@ -108,7 +182,7 @@ export default function LibraryPage() {
             {filtered.map((song) => {
               const sb = statusBadge[song.status]
               return (
-                <li key={song.id}>
+                <li key={song.songKey}>
                   <button
                     onClick={() => setSelected(song)}
                     className="grid w-full grid-cols-1 items-center gap-2 px-5 py-3.5 text-left transition-colors hover:bg-muted/40 md:grid-cols-[1.5fr_0.6fr_0.6fr_0.8fr_0.8fr] md:gap-4"
@@ -126,7 +200,7 @@ export default function LibraryPage() {
                     </div>
                     <span className="font-mono text-sm text-muted-foreground">
                       <span className="md:hidden">Key: </span>
-                      {song.key}
+                      {song.songKey}
                     </span>
                     <span className="font-mono text-sm text-muted-foreground">
                       <span className="md:hidden">BPM: </span>
@@ -161,7 +235,9 @@ export default function LibraryPage() {
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setSelected(null)}
-          />
+          >
+
+          </div>
           <div className="absolute right-0 top-0 flex h-full w-full max-w-lg flex-col border-l border-border bg-card shadow-2xl">
             <div className="flex items-start justify-between gap-4 border-b border-border p-5">
               <div className="min-w-0">
@@ -184,7 +260,7 @@ export default function LibraryPage() {
                 <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                   Key
                 </p>
-                <p className="mt-1 font-mono text-sm font-medium">{selected.key}</p>
+                <p className="mt-1 font-mono text-sm font-medium">{selected.songKey}</p>
               </div>
               <div className="bg-card p-4">
                 <p className="flex items-center gap-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
@@ -211,10 +287,11 @@ export default function LibraryPage() {
                 <Radio className="size-4" />
                 Open in Live Mode
               </button>
-              <button className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-border px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted">
+              <Link href={`/library/${selected?._id}/edit`} className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-border px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted">
                 <Pencil className="size-4" />
                 Edit
-              </button>
+              </Link>
+              <button onClick={() => handleDelete(selected)} className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-border px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted">Eliminar</button>
               <button className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-primary/40 bg-primary/10 px-3 py-2.5 text-sm font-medium text-primary transition-colors hover:bg-primary/20">
                 <Sparkles className="size-4" />
                 AI

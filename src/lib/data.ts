@@ -1,16 +1,17 @@
 export type SongStatus = "ready" | "rehearsing" | "draft"
 
 export type Song = {
-  id: string
+  _id: string
   title: string
   artist: string
-  key: string
+  songKey: string
   bpm: number
   duration: string
   tags: string[]
   status: SongStatus
   updatedAt: string
-  lyrics: string
+  lyrics: string,
+  genre?: string
 }
 
 export type Setlist = {
@@ -25,10 +26,10 @@ export type Setlist = {
 
 export const songs: Song[] = [
   {
-    id: "neon-rivers",
+    _id: "neon-rivers",
     title: "Neon Rivers",
     artist: "The Midnight Echo",
-    key: "A minor",
+    songKey: "A minor",
     bpm: 92,
     duration: "4:12",
     tags: ["original", "encore"],
@@ -57,10 +58,10 @@ If the morning takes this dream away
 I'll be here when all the embers fade`,
   },
   {
-    id: "paper-hearts",
+    _id: "paper-hearts",
     title: "Paper Hearts",
     artist: "The Midnight Echo",
-    key: "C major",
+    songKey: "C major",
     bpm: 76,
     duration: "3:48",
     tags: ["original", "acoustic"],
@@ -79,10 +80,10 @@ Even if it crumbles in my hand
 Paper hearts still made a place to land`,
   },
   {
-    id: "gravity",
+    _id: "gravity",
     title: "Gravity",
     artist: "Cover — John Mayer",
-    key: "G major",
+    songKey: "G major",
     bpm: 64,
     duration: "4:05",
     tags: ["cover", "ballad"],
@@ -98,10 +99,10 @@ With all the love that his heart can stand
 Dreams of ways to throw it all away`,
   },
   {
-    id: "wildfire",
+    _id: "wildfire",
     title: "Wildfire",
     artist: "The Midnight Echo",
-    key: "E minor",
+    songKey: "E minor",
     bpm: 128,
     duration: "3:21",
     tags: ["original", "opener"],
@@ -118,10 +119,10 @@ Run with me into the flame
 Nothing's ever gonna be the same`,
   },
   {
-    id: "slow-dance",
+    _id: "slow-dance",
     title: "Slow Dance in the Kitchen",
     artist: "The Midnight Echo",
-    key: "D major",
+    songKey: "D major",
     bpm: 58,
     duration: "4:40",
     tags: ["original", "ballad"],
@@ -136,10 +137,10 @@ So we slow dance in the kitchen light
 Barefoot on a Tuesday night`,
   },
   {
-    id: "the-fever",
+    _id: "the-fever",
     title: "The Fever",
     artist: "Cover — Fleetwood Mac",
-    key: "B minor",
+    songKey: "B minor",
     bpm: 110,
     duration: "3:55",
     tags: ["cover", "encore"],
@@ -154,10 +155,10 @@ It's the fever, won't you let it ride
 Pull me close and don't you hide`,
   },
   {
-    id: "city-of-glass",
+    _id: "city-of-glass",
     title: "City of Glass",
     artist: "The Midnight Echo",
-    key: "F# minor",
+    songKey: "F# minor",
     bpm: 100,
     duration: "4:18",
     tags: ["original"],
@@ -172,10 +173,10 @@ In the city of glass we disappear
 Reflections of a love that brought us here`,
   },
   {
-    id: "long-way-home",
+    _id: "long-way-home",
     title: "Long Way Home",
     artist: "The Midnight Echo",
-    key: "A major",
+    songKey: "A major",
     bpm: 84,
     duration: "3:36",
     tags: ["original", "closer"],
@@ -231,7 +232,7 @@ export const setlists: Setlist[] = [
 ]
 
 export function getSong(id: string) {
-  return songs.find((s) => s.id === id)
+  return songs.find((s) => s._id === id)
 }
 
 export const stats = [
