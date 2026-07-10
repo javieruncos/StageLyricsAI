@@ -180,3 +180,32 @@ export const updateSong = async (req: Request, id: string) => {
         }, { status: 500 })
     }
 }
+
+
+export const deleteSong = async (id: string) => {
+    
+    try {
+        await connectDB()
+        
+        const song = await Songs.findByIdAndDelete(id)
+
+        if (!song) {
+            return Response.json({
+                success: false,
+                message: "Cancion no encontrada"
+            }, { status: 404 })
+        }
+
+        return Response.json({
+            success: true,
+            message: "Cancion eliminada exitosamente"
+        })
+    } catch (error) {
+        console.error(error)
+        return Response.json({
+            success: false,
+            message: "Error al eliminar la cancion"
+        }, { status: 500 })
+    }
+
+}

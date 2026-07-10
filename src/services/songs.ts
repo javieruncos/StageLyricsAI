@@ -53,3 +53,15 @@ export const updateSong = async ({id, data}: UpdateSongParams) =>{
 
     
 }
+
+export const deleteSong = async (id: string) => {
+    try {
+        const response = await api.delete(`/songs/${id}`)
+        return response.data
+    } catch (error) {
+        console.log(error)
+        throw new Error("Error al eliminar la cancion")
+       
+
+    }
+}
