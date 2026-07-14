@@ -57,3 +57,23 @@ export const createSetlist = async(req: Request) => {
     }, { status: 500 })
  }   
 }
+
+export const getSetlist = async() => {
+    try {
+        await connectDB()
+
+        const setlists = await SetList.find().populate("songs").sort({ createdAt: -1 });
+
+        return NextResponse.json({
+            message: "Lista obtenida exitosamente",
+            success: true,
+            data: setlists
+           }, { status: 200 })
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json({
+            message: "Error al obtener la lista",
+            error
+        }, { status: 500 })
+    }
+}   
