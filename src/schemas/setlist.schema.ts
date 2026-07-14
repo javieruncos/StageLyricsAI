@@ -6,9 +6,8 @@ export const SetListSchema = z.object({
     songs: z.array(z.string()).min(1, "Debe haber al menos una canción"),
     description: z.string().optional(),
     status: z.enum(["draft", "ready", "archived"]),
-    date: z.date(),
+    date: z.string().optional(),
     venue: z.string(),
-    durationMin: z.number(),
 })
 
 export type SetList = z.infer<typeof SetListSchema>
