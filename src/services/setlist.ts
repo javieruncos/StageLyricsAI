@@ -1,7 +1,10 @@
-import { SetList } from "@/schemas/setlist.schema"
-import { api } from "./api"
 
-export const createSetlist = async  (setlist: SetList):Promise<SetList>=>{
+import { SetListSchema } from "@/schemas/setlist.schema"
+import { SetList } from "@/types/setlist"
+import { api } from "./api"
+import {z} from "zod"
+
+export const createSetlist = async  (setlist: z.infer<typeof SetListSchema>):Promise<SetList>=>{
    try {
     const result = await api.post(`/setlists`, setlist)
     return result.data
@@ -13,10 +16,31 @@ export const createSetlist = async  (setlist: SetList):Promise<SetList>=>{
 
 export const getSetlists = async ():Promise<SetList[]>=>{
     try {
-        const result = await api.get(`/setlists`)
+        const result = await api.get(`/setlist`)
         return result.data.data
     } catch (error) {
         console.log(error)
         throw new Error("Error al obtener las setlists")
+    }
+}
+
+export const updateSetlist = async (id:string,setlist: z.infer<typeof SetListSchema>):Promise<SetList>=>{
+    try {
+        const result = await api.patch(`/setlists/${id}`, setlist)
+        return result.data
+    } catch (error) {
+        console.log(error)
+        throw new Error("Error al actualizar la setlist")
+    }
+}
+
+
+export const getSetListByID = async (id:string):Promise<SetList>=>{
+    try {
+        const result = await api.get(`/setlists/${id}`)
+        return result.data
+    } catch (error) {
+        console.log(error)
+        throw new Error("Error al obtener la setlist")
     }
 }

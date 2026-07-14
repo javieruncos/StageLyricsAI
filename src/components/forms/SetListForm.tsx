@@ -56,7 +56,13 @@ function formatDuration(totalSeconds: number) {
 
 type CreateSetlistFormData = z.infer<typeof SetListSchema>
 
-export default function NewSetlistPage() {
+type SetListFormProps = {
+    setlistId?:string
+}
+
+
+
+export default function NewSetlistPage({setlistId}:SetListFormProps) {
     const {data:songs = []} = useSongs()
 
     const [query, setQuery] = useState("")
