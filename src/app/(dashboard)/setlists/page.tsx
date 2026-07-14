@@ -28,10 +28,10 @@ export default function SetlistsPage() {
         title="Setlists"
         description="Arrange songs into shows, reorder on the fly and lock in your running order before you hit the stage."
       >
-        <button className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3.5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
+        <Link href="/setlists/new" className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3.5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
           <Plus className="size-4" />
           New setlist
-        </button>
+        </Link>
       </PageHeader>
 
       <div className="grid gap-6 p-4 md:p-6 lg:grid-cols-[1fr_360px]">
@@ -125,7 +125,7 @@ export default function SetlistsPage() {
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-sm font-medium">{song.title}</p>
                         <p className="truncate text-xs text-muted-foreground">
-                          {song.key} · {song.bpm} BPM
+                          {song.songKey} · {song.bpm} BPM
                         </p>
                       </div>
                       <span className="font-mono text-xs text-muted-foreground">

@@ -80,7 +80,7 @@ export default function LivePage() {
           </div>
         </div>
         <div className="flex items-center gap-2 font-mono text-sm">
-          <Badge variant="muted">{song.key}</Badge>
+          <Badge variant="muted">{song.songKey}</Badge>
           <Badge variant="muted">{song.bpm} BPM</Badge>
           <span className="hidden text-muted-foreground sm:inline">
             {index + 1}/{setlistSongs.length}
@@ -96,7 +96,7 @@ export default function LivePage() {
           </p>
           <ul className="space-y-1">
             {setlistSongs.map((s, i) => (
-              <li key={s.id}>
+              <li key={s._id}>
                 <button
                   onClick={() => {
                     setPlaying(false)
