@@ -1,10 +1,10 @@
 
 import { SetListSchema } from "@/schemas/setlist.schema"
-import { SetList } from "@/types/setlist"
+import { SetListDb } from "@/types/setlist"
 import { api } from "./api"
 import {z} from "zod"
 
-export const createSetlist = async  (setlist: z.infer<typeof SetListSchema>):Promise<SetList>=>{
+export const createSetlist = async  (setlist: z.infer<typeof SetListSchema>):Promise<SetListDb>=>{
    try {
     const result = await api.post(`/setlists`, setlist)
     return result.data
@@ -14,7 +14,7 @@ export const createSetlist = async  (setlist: z.infer<typeof SetListSchema>):Pro
    }
 }
 
-export const getSetlists = async ():Promise<SetList[]>=>{
+export const getSetlists = async ():Promise<SetListDb[]>=>{
     try {
         const result = await api.get(`/setlist`)
         return result.data.data
@@ -24,7 +24,7 @@ export const getSetlists = async ():Promise<SetList[]>=>{
     }
 }
 
-export const updateSetlist = async (id:string,setlist: z.infer<typeof SetListSchema>):Promise<SetList>=>{
+export const updateSetlist = async (id:string,setlist: z.infer<typeof SetListSchema>):Promise<SetListDb>=>{
     try {
         const result = await api.patch(`/setlists/${id}`, setlist)
         return result.data
@@ -35,7 +35,7 @@ export const updateSetlist = async (id:string,setlist: z.infer<typeof SetListSch
 }
 
 
-export const getSetListByID = async (id:string):Promise<SetList>=>{
+export const getSetListByID = async (id:string):Promise<SetListDb>=>{
     try {
         const result = await api.get(`/setlists/${id}`)
         return result.data

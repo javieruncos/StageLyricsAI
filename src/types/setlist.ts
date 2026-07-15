@@ -1,6 +1,6 @@
 
 
-export interface SetList {
+export interface SetListDb {
   _id: string
   name: string
   description?: string

@@ -40,4 +40,4 @@ const SetListSchema = new Schema({
     }
 },{timestamps:true})
 
-export const SetList = models.Setlists || model("Setlist", SetListSchema)
+export const SetList = models.Setlist || model("Setlist", SetListSchema)

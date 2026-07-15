@@ -1,10 +1,10 @@
-import { SetList } from "@/schemas/setlist.schema"
 import { useQuery } from "@tanstack/react-query"
 import { queryKeys } from "@/lib/queryKeys"
 import { getSetListByID, getSetlists } from "@/services/setlist"
+import { SetListDb } from "@/types/setlist"
 
 export const useSetlistById = (id: string) => {
-    return useQuery<SetList | null>({
+    return useQuery<SetListDb | null>({
         queryKey: queryKeys.setlist(id),
         queryFn: () => getSetListByID(id),
         enabled: !!id,
@@ -12,7 +12,7 @@ export const useSetlistById = (id: string) => {
 }
 
 export const useSetlists = () => {
-    return useQuery<SetList[]>({
+    return useQuery<SetListDb[]>({
         queryKey: queryKeys.setlists,
         queryFn: () => getSetlists(),
     })
