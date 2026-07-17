@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useEffectEvent, useMemo, useState } from "react"
 import Link from "next/link"
 import {
     ArrowLeft,
@@ -25,6 +25,11 @@ import { SetListSchema } from "@/schemas/setlist.schema"
 import z from "zod"
 import { useSongs } from "@/hooks/useSongs"
 import { SongStatus } from "@/lib/data"
+import { useCreateSetlist } from "@/hooks/useCreateSetlist"
+import { useUpdateSetlist } from "@/hooks/useUpdateSetlist"
+import { useRouter } from "next/navigation"
+import { useSetlistById } from "@/hooks/useSetlist"
+import Swal from "sweetalert2"
 
 type SetlistStatus = "draft" | "ready" | "archived"
 
@@ -57,15 +62,21 @@ function formatDuration(totalSeconds: number) {
 type CreateSetlistFormData = z.infer<typeof SetListSchema>
 
 type SetListFormProps = {
-    setlistId?:string
+    setlistId?: string
 }
 
-
-
-export default function NewSetlistPage({setlistId}:SetListFormProps) {
-    const {data:songs = []} = useSongs()
-
+export default function NewSetlistPage({ setlistId }: SetListFormProps) {
+    const { data: songs = [] } = useSongs()
     const [query, setQuery] = useState("")
+
+    const { mutateAsync: createSetlist } = useCreateSetlist()
+    const { mutateAsync: updateSetlist } = useUpdateSetlist()
+
+    const isEditMode = !!setlistId
+
+    const router = useRouter()
+
+    const { data: setlist, isLoading } = useSetlistById(setlistId)
 
 
     const form = useForm<CreateSetlistFormData>({
@@ -79,14 +90,24 @@ export default function NewSetlistPage({setlistId}:SetListFormProps) {
             date: "",
             venue: "",
             status: "draft",
-            songs: []
+            songs: setlist?.songs.map(song => song._id) ?? [],
         },
     })
 
+    useEffect(() => {
+        if (!isEditMode || !setlist) return;
+
+        form.reset({
+            name: setlist.name,
+            description: setlist.description,
+            date: setlist.date,
+            venue: setlist.venue,
+            status: setlist.status,
+            songs: setlist.songs.map(song => song._id),
+        });
+    }, [isEditMode, setlist, form]);
+
     const selected = form.watch("songs");
-
-
-
 
 
     const filtered = useMemo(() => {
@@ -130,8 +151,40 @@ export default function NewSetlistPage({setlistId}:SetListFormProps) {
     const statusVariant =
         form.watch("status") === "ready" ? "success" : form.watch("status") === "archived" ? "outline" : "muted"
 
-    const onSubmit = (data: CreateSetlistFormData) => {
+    const onSubmit = async (data: CreateSetlistFormData) => {
         console.log("Submitting", data)
+
+        try {
+            let result;
+            if (isEditMode) {
+                result = await updateSetlist({ id: setlistId!, setlist: data })
+            } else {
+                result = await createSetlist(data)
+            }
+
+            await Swal.fire({
+                title: "¡Canción creada!",
+                text: "La setlist se creó correctamente.",
+                icon: "success",
+                confirmButtonText: "Continuar",
+                background: "#18181B",
+                color: "#fafafa",
+                confirmButtonColor: "#EAB308",
+                iconColor: "#EAB308",
+                customClass: {
+                    popup: "rounded-xl border border-zinc-800 shadow-2xl",
+                    title: "text-xl font-bold",
+                    htmlContainer: "text-zinc-400",
+                    confirmButton: "rounded-lg px-6 py-2 font-medium",
+                },
+            })
+
+            router.push(`/setlists/${result._id}`)
+            router.refresh()
+
+        } catch (error) {
+
+        }
     }
 
     return (
@@ -260,7 +313,7 @@ export default function NewSetlistPage({setlistId}:SetListFormProps) {
                             </div>
 
                             <div className="mt-3 flex flex-col gap-2">
-                                {filtered.map((song) => {
+                                {songs.map((song) => {
                                     const isSelected = selected.includes(song._id)
                                     const meta = songStatusMeta[song.status]
                                     return (

@@ -77,3 +77,61 @@ export const getSetlist = async() => {
         }, { status: 500 })
     }
 }   
+
+
+export const updateSetlist = async(req: Request,id: string) => {
+    try {
+        await connectDB()
+
+        const body = await req.json()
+
+        const result = SetListSchema.safeParse(body)
+
+        if (!result.success) {
+            return NextResponse.json({
+                message: "Todos los campos son obligatorios",
+                error: result.error
+            }, { status: 400 })
+        }
+
+        const {name,description,songs,status,date,venue} = result.data;
+
+        const setlist = await SetList.findByIdAndUpdate(id, {
+            name,
+            description,
+            songs,
+            status,
+            date: date ? new Date(date) : new Date(),
+            venue,
+        });
+
+        return NextResponse.json({
+            message: "Lista actualizada exitosamente",
+            data: setlist
+        }, { status: 200 })
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json({
+            message: "Error al actualizar la lista",
+            error
+        }, { status: 500 })
+    }
+}
+
+export const getSetListByID = async (id: string) => {
+    try {
+        await connectDB()
+        const setlist = await SetList.findById(id)
+
+        return NextResponse.json({
+            message: "Lista obtenida exitosamente",
+            data: setlist
+        }, { status: 200 })
+    } catch (error) {
+        console.error(error)
+        return NextResponse.json({
+            message: "Error al obtener la lista",
+            error
+        }, { status: 500 })
+    }
+}

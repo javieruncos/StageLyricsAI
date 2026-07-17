@@ -17,9 +17,18 @@ import { useSetlists } from "@/hooks/useSetlist"
 import { useSongs } from "@/hooks/useSongs"
 
 const statusMeta = {
-  upcoming: { label: "Upcoming", variant: "success" as const },
-  draft: { label: "Draft", variant: "muted" as const },
-  performed: { label: "Performed", variant: "outline" as const },
+  draft: {
+    label: "Draft",
+    variant: "muted" as const,
+  },
+  ready: {
+    label: "Ready",
+    variant: "success" as const,
+  },
+  archived: {
+    label: "Archived",
+    variant: "outline" as const,
+  },
 }
 
 export default function SetlistsPage() {
