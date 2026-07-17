@@ -121,8 +121,13 @@ export const updateSetlist = async(req: Request,id: string) => {
 export const getSetListByID = async (id: string) => {
     try {
         await connectDB()
-        const setlist = await SetList.findById(id)
-
+        const setlist = await SetList.findById(id).populate("songs")
+        if (!setlist) {
+            return NextResponse.json({
+                message: "Lista no encontrada",
+                success: false,
+            }, { status: 404 })
+        }
         return NextResponse.json({
             message: "Lista obtenida exitosamente",
             data: setlist

@@ -5,7 +5,6 @@ export async function PUT(
     { params }: { params: Promise<{ id:string }> }
 ){
     const {id} = await params
-    const body = await req.json()
 
     return updateSetlist(req,id)
 }

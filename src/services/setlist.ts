@@ -32,7 +32,7 @@ export const getSetlists = async ():Promise<SetListDb[]>=>{
 
 export const updateSetlist = async ({id, setlist}:UpdateSetListInput):Promise<SetListDb>=>{
     try {
-        const result = await api.patch(`/setlist/${id}`, setlist)
+        const result = await api.put(`/setlist/${id}`, setlist)
         return result.data.data
     } catch (error) {
         console.log(error)

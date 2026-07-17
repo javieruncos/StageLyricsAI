@@ -97,6 +97,11 @@ export default function NewSetlistPage({ setlistId }: SetListFormProps) {
     useEffect(() => {
         if (!isEditMode || !setlist) return;
 
+        console.log("SETLIST:", setlist);
+        console.log("SONGS:", setlist.songs);
+        console.log("IDS:", setlist.songs.map(song => song._id));
+
+
         form.reset({
             name: setlist.name,
             description: setlist.description,
@@ -179,7 +184,7 @@ export default function NewSetlistPage({ setlistId }: SetListFormProps) {
                 },
             })
 
-            router.push(`/setlists/${result._id}`)
+            router.push(`/setlists`)
             router.refresh()
 
         } catch (error) {
@@ -207,6 +212,7 @@ export default function NewSetlistPage({ setlistId }: SetListFormProps) {
                     onSubmit,
                     (errors) => {
                         console.log("Errores:", errors);
+                        console.log(JSON.stringify(errors.songs, null, 2));
                     }
                 )}
                 className="grid grid-cols-1 gap-4 p-4 md:p-6 lg:grid-cols-[1.1fr_0.9fr]"
