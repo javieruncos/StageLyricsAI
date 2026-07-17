@@ -24,7 +24,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { createSongSchema } from "@/schemas/songs.schema";
 import { z } from "zod"
 import { musicalKeys, statusOptions, suggestedTags } from "@/data/songsFormData";
-import { createSongs } from "@/services/songs"
 import Swal from "sweetalert2"
 import { useRouter } from "next/navigation"
 import { useCreateSong } from "@/hooks/useCreateSong"

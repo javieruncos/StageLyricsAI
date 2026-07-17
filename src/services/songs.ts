@@ -49,6 +49,7 @@ export const updateSong = async ({id, data}: UpdateSongParams) =>{
         return response.data
     } catch (error) {
         console.log(error)
+        throw new Error("Error al actualizar la cancion")
     }
 
     

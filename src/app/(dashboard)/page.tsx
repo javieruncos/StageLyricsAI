@@ -198,7 +198,7 @@ export default function OverviewPage() {
             <ul className="divide-y divide-border">
               {recentSongs.map((song) => (
                 <li
-                  key={song.id}
+                  key={song._id}
                   className="flex items-center gap-3 py-3 first:pt-0 last:pb-0"
                 >
                   <div className="flex size-9 items-center justify-center rounded-lg bg-muted text-muted-foreground">
