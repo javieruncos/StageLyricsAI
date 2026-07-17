@@ -195,15 +195,15 @@ export default function NewSetlistPage({ setlistId }: SetListFormProps) {
     return (
         <div>
             <PageHeader
-                title="New Setlist"
-                description="Build a performance setlist — pick your songs, set the running order and lock it in before the show."
+                title="Crear Setlist"
+                description="Construye un setlist de actuación — elige tus canciones, establece el orden y bloquéalo antes del show."
             >
                 <Link
                     href="/library"
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                    className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                     <ArrowLeft className="size-4" />
-                    Back to library
+                    {isEditMode ? "Volver a la librería" : "Volver a las setlists"}
                 </Link>
             </PageHeader>
 
@@ -224,10 +224,10 @@ export default function NewSetlistPage({ setlistId }: SetListFormProps) {
                         <CardContent className="p-5">
                             <h2 className="flex items-center gap-2 text-sm font-semibold">
                                 <ListMusic className="size-4 text-primary" />
-                                Setlist details
+                                Detalles de la Setlist
                             </h2>
                             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                                <Field label="Setlist name" required className="sm:col-span-2">
+                                <Field label="Nombre de la Setlist" required className="sm:col-span-2">
                                     <input
                                         {...form.register("name")}
                                         placeholder="e.g. Bluebird Café — Friday"
@@ -301,10 +301,10 @@ export default function NewSetlistPage({ setlistId }: SetListFormProps) {
                             <div className="flex items-center justify-between">
                                 <h2 className="flex items-center gap-2 text-sm font-semibold">
                                     <Music2 className="size-4 text-primary" />
-                                    Songs
+                                    Canciones
                                 </h2>
                                 <span className="font-mono text-[11px] text-muted-foreground">
-                                    {selected.length} selected
+                                    {selected.length} seleccionadas
                                 </span>
                             </div>
 
@@ -363,7 +363,7 @@ export default function NewSetlistPage({ setlistId }: SetListFormProps) {
                                 })}
                                 {filtered.length === 0 && (
                                     <p className="py-6 text-center text-sm text-muted-foreground">
-                                        No songs match &ldquo;{query}&rdquo;.
+                                        No hay canciones que coincidan con &ldquo;{query}&rdquo;.
                                     </p>
                                 )}
                             </div>
@@ -376,7 +376,7 @@ export default function NewSetlistPage({ setlistId }: SetListFormProps) {
                     <Card className="lg:sticky lg:top-22">
                         <div className="flex items-center justify-between border-b border-border px-5 py-3">
                             <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                                Live preview
+                                Vista previa
                             </span>
                             <Badge variant={statusVariant}>
                                 {statusOptions.find((s) => s.value === form.watch("status"))?.label}
@@ -400,19 +400,19 @@ export default function NewSetlistPage({ setlistId }: SetListFormProps) {
                             <div className="mt-4 grid grid-cols-3 gap-px overflow-hidden rounded-lg border border-border bg-border">
                                 <div className="bg-card p-3">
                                     <p className="flex items-center gap-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                                        <Calendar className="size-3" /> Date
+                                        <Calendar className="size-3" /> Fecha
                                     </p>
                                     <p className="mt-1 font-mono text-sm font-medium">{form.getValues("date")?.slice(0, 10) || "—"}</p>
                                 </div>
                                 <div className="bg-card p-3">
                                     <p className="flex items-center gap-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                                        <ListMusic className="size-3" /> Songs
+                                        <ListMusic className="size-3" /> Canciones
                                     </p>
                                     <p className="mt-1 font-mono text-sm font-medium">{selected.length}</p>
                                 </div>
                                 <div className="bg-card p-3">
                                     <p className="flex items-center gap-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                                        <Clock className="size-3" /> Length
+                                        <Clock className="size-3" /> Duración
                                     </p>
                                     <p className="mt-1 font-mono text-sm font-medium">
                                         {formatDuration(estimatedSeconds)}
@@ -445,7 +445,7 @@ export default function NewSetlistPage({ setlistId }: SetListFormProps) {
                                     </ol>
                                 ) : (
                                     <p className="px-2 py-6 text-center text-sm text-muted-foreground">
-                                        Selected songs will appear here in order.
+                                       Las canciones seleccionadas aparecerán aquí en orden.
                                     </p>
                                 )}
                             </div>
@@ -457,7 +457,7 @@ export default function NewSetlistPage({ setlistId }: SetListFormProps) {
                                 className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 <Save className="size-4" />
-                                Save setlist
+                                Guardar Setlist
                             </button>
                             <button
                                 type="button"
@@ -465,13 +465,13 @@ export default function NewSetlistPage({ setlistId }: SetListFormProps) {
                                 className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-border px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 <Radio className="size-4" />
-                                Save &amp; open Live
+                                &amp; Abrir En Vivo
                             </button>
                             <Link
                                 href="/setlists"
                                 className="inline-flex items-center justify-center rounded-lg border border-border px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                             >
-                                Cancel
+                                Cancelar
                             </Link>
                         </div>
                     </Card>

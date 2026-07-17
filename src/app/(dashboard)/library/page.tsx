@@ -25,10 +25,10 @@ import { Toast } from "radix-ui"
 import Swal from "sweetalert2"
 
 const filters: { label: string; value: SongStatus | "all" }[] = [
-  { label: "All songs", value: "all" },
-  { label: "Ready", value: "ready" },
-  { label: "Rehearsing", value: "rehearsing" },
-  { label: "Drafts", value: "draft" },
+  { label: "Canciones", value: "all" },
+  { label: " listas ", value: "ready" },
+  { label: "Ensayos", value: "rehearsing" },
+  { label: "Borradores", value: "draft" },
 ]
 
 const statusBadge: Record<SongStatus, { label: string; variant: "success" | "warning" | "muted" }> = {
@@ -128,12 +128,12 @@ export default function LibraryPage() {
   return (
     <div>
       <PageHeader
-        title="Song Library"
-        description="Every lyric, key and tempo in one place. Search, organize and prep songs for the stage."
+        title="Canciones"
+        description="Cada letra, tono y tempo en un solo lugar. Busca, organiza y prepara canciones para el escenario."
       >
         <Link href="/library/new" className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3.5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
           <Plus className="size-4" />
-          New song
+          Nueva canción
         </Link>
       </PageHeader>
 

@@ -18,9 +18,9 @@ import { PageHeader } from "@/components/dashboard/page-header"
 import { stats, songs, setlists, activity, getSong } from "@/lib/data"
 
 const aiTools = [
-  { icon: Wand2, label: "Auto-format lyrics", desc: "Clean structure & sections" },
-  { icon: Music2, label: "Transpose key", desc: "Shift to any key instantly" },
-  { icon: Mic2, label: "Generate cues", desc: "From an audio recording" },
+  { icon: Wand2, label: "Alinear estrofas", desc: "Alinear y organizar las estrofas" },
+  { icon: Music2, label: "Cambiar tono", desc: "Cambiar el tono de la canción" },
+  { icon: Mic2, label: "Generar indicaciones", desc: "Generar indicaciones" },
 ]
 
 export default function OverviewPage() {
@@ -30,15 +30,15 @@ export default function OverviewPage() {
   return (
     <div>
       <PageHeader
-        title="Good evening, Maya"
-        description="Your stage is set. Here's what's happening across your library and upcoming shows."
+        title="Bienvenida, Maya"
+        description="Tu escenario está listo. Aquí tienes lo más relevante de tu librería y los próximos shows."
       >
         <Link
           href="/live"
           className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3.5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
         >
           <Radio className="size-4" />
-          Start Live Mode
+          Modo En Vivo
         </Link>
       </PageHeader>
 
@@ -68,14 +68,14 @@ export default function OverviewPage() {
             <div className="relative">
               <CardHeader>
                 <div className="flex items-center gap-2">
-                  <Badge>Up next</Badge>
+                  <Badge>Siguiente Show</Badge>
                   <span className="text-xs text-muted-foreground">{nextShow.date}</span>
                 </div>
                 <Link
                   href="/setlists"
                   className="text-xs font-medium text-primary hover:underline"
                 >
-                  View setlist
+                  Ver setlist
                 </Link>
               </CardHeader>
               <CardContent>
@@ -126,7 +126,7 @@ export default function OverviewPage() {
                   className="mt-4 inline-flex items-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-4 py-2.5 text-sm font-medium text-primary transition-colors hover:bg-primary/20"
                 >
                   <Play className="size-4" />
-                  Rehearse this set
+                  Ensayar esta setlist
                 </Link>
               </CardContent>
             </div>
@@ -135,7 +135,7 @@ export default function OverviewPage() {
           {/* Activity */}
           <Card>
             <CardHeader>
-              <CardTitle>Recent activity</CardTitle>
+              <CardTitle>Actividad reciente</CardTitle>
               <Sparkles className="size-4 text-primary" aria-hidden="true" />
             </CardHeader>
             <CardContent className="pt-2">
@@ -186,12 +186,12 @@ export default function OverviewPage() {
         {/* Recent songs */}
         <Card>
           <CardHeader>
-            <CardTitle>Recently updated</CardTitle>
+            <CardTitle>Canciones recientes</CardTitle>
             <Link
               href="/library"
               className="text-xs font-medium text-primary hover:underline"
             >
-              View library
+              Ver canciones
             </Link>
           </CardHeader>
           <CardContent className="pt-2">

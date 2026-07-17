@@ -44,7 +44,7 @@ export function Topbar() {
             className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
           >
             <Plus className="size-4" />
-            <span className="hidden sm:inline">New song</span>
+            <span className="hidden sm:inline">Nueva Canción</span>
           </Link>
           <button
             className="relative inline-flex size-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:text-foreground"
@@ -55,11 +55,10 @@ export function Topbar() {
           </button>
           <div className="flex items-center gap-2 rounded-lg border border-border bg-card py-1 pl-1 pr-2.5">
             <div className="flex size-7 items-center justify-center rounded-md bg-primary/20 text-xs font-semibold text-primary">
-              ME
+              yo
             </div>
             <div className="hidden leading-tight md:block">
               <p className="text-xs font-medium">Maya Ellis</p>
-              <p className="text-[10px] text-muted-foreground">Lead vocals</p>
             </div>
           </div>
         </div>
