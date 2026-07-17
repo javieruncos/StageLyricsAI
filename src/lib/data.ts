@@ -236,16 +236,16 @@ export function getSong(id: string) {
 }
 
 export const stats = [
-  { label: "Songs in library", value: "128", delta: "+6 this month", trend: "up" as const },
-  { label: "Setlists", value: "14", delta: "2 upcoming", trend: "up" as const },
-  { label: "Shows this month", value: "5", delta: "Next in 3 days", trend: "up" as const },
-  { label: "Rehearsal hours", value: "23.5", delta: "+4.2 vs last", trend: "up" as const },
+  { label: "Canciones en la librería", value: "128", delta: "+6 este mes", trend: "up" as const },
+  { label: "Setlists", value: "14", delta: "2 próximos", trend: "up" as const },
+  { label: "Shows este mes", value: "5", delta: "Próximo en 3 días", trend: "up" as const },
+  { label: "Horas de ensayo", value: "23.5", delta: "+4.2 vs último", trend: "up" as const },
 ]
 
 export const activity = [
-  { id: 1, text: "AI cleaned up timing markers in", target: "Neon Rivers", time: "2h ago" },
-  { id: 2, text: "You added", target: "The Fever", time: "Yesterday" },
-  { id: 3, text: "Setlist finalized for", target: "Bluebird Café — Friday", time: "Yesterday" },
-  { id: 4, text: "Transposed", target: "Gravity to G major", time: "3 days ago" },
-  { id: 5, text: "Imported 4 songs from", target: "Spotify playlist", time: "5 days ago" },
+  { id: 1, text: "La IA limpió los marcadores de tiempo en", target: "Neon Rivers", time: "hace 2h" },
+  { id: 2, text: "Añadiste", target: "The Fever", time: "Ayer" },
+  { id: 3, text: "Setlist finalizado para", target: "Bluebird Café — Friday", time: "Ayer" },
+  { id: 4, text: "Transpuesto", target: "Gravity to G major", time: "hace 3 días" },
+  { id: 5, text: "Importadas 4 canciones de", target: "Spotify playlist", time: "5 days ago" },
 ]
