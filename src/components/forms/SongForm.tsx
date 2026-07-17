@@ -166,12 +166,12 @@ export default function NewSongPage({ songId }: SongFormProps) {
     return (
         <div>
             <PageHeader
-                title="New Song"
-                description="Add a song to your library — capture the key, tempo and lyrics so it's ready for the stage."
+                title="Nueva Canción"
+                description="Agrega una canción a tu biblioteca — captura la tonalidad, tempo y letra para que esté lista para el escenario."
             >
                 <Link
                     href="/library"
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                    className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                     <ArrowLeft className="size-4" />
                     Volver a la biblioteca
